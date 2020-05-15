@@ -1,5 +1,5 @@
 # Azure Pipelines/DevOps agent
-CentOS 8 based Azure DevOps (ADO) build agent image.
+Alpine based Azure DevOps (ADO) build agent image.
 
 ### How to use
 You'll need the following in order to run this container:
