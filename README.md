@@ -1,4 +1,4 @@
-# ado-build-agent
+# Azure Pipelines/DevOps agent
 CentOS 8 based Azure DevOps (ADO) build agent image.
 
 ### How to use
@@ -15,7 +15,7 @@ docker run \
     -e AZP_TOKEN='12345abcde' \
     -e AZP_POOL='my_pool' \
     -e AZP_AGENT_NAME='my_agent' \
-    saccy/ado-build-agent
+    hudev/azp-agent:centos8
 ```
 
 To run behind a proxy that requires username and password:
@@ -28,7 +28,7 @@ docker run \
     -e PROXY_URL='https://my_proxy:8000' \
     -e PROXY_USER='my_proxy_user' \
     -e PROXY_PASS='12345abcde' \
-    saccy/ado-build-agent
+    hudev/azp-agent:centos8
 ```
 
 To run behind a proxy that does *not* require authentication:
@@ -39,7 +39,7 @@ docker run \
     -e AZP_POOL='my_pool' \
     -e AZP_AGENT_NAME='my_agent' \
     -e PROXY_URL='https://my_proxy:8000' \
-    saccy/ado-build-agent
+    hudev/azp-agent:centos8
 ```
 
 ### TODO
