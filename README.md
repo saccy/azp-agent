@@ -15,7 +15,7 @@ docker run \
     -e AZP_TOKEN='12345abcde' \
     -e AZP_POOL='my_pool' \
     -e AZP_AGENT_NAME='my_agent' \
-    hudev/azp-agent:centos8
+    saccy/ado-build-agent
 ```
 
 To run behind a proxy that requires username and password:
@@ -28,7 +28,7 @@ docker run \
     -e PROXY_URL='https://my_proxy:8000' \
     -e PROXY_USER='my_proxy_user' \
     -e PROXY_PASS='12345abcde' \
-    hudev/azp-agent:centos8
+    saccy/ado-build-agent
 ```
 
 To run behind a proxy that does *not* require authentication:
@@ -39,7 +39,7 @@ docker run \
     -e AZP_POOL='my_pool' \
     -e AZP_AGENT_NAME='my_agent' \
     -e PROXY_URL='https://my_proxy:8000' \
-    hudev/azp-agent:centos8
+    saccy/ado-build-agent
 ```
 
 ### TODO
