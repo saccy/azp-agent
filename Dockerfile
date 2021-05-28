@@ -1,20 +1,21 @@
 FROM centos:latest
-LABEL maintainer='saccy@headsup.dev'
+LABEL maintainer='saccy'
 LABEL description='Azure DevOps build agent centos 8 base container'
 
-#Save latest version number to a file for later use (found here: https://github.com/microsoft/azure-pipelines-agent/releases)
+#Save latest version number to a file for later use.
 ENV agent_version /tmp/agent_version
-RUN curl -s https://github.com/microsoft/azure-pipelines-agent/releases | grep '<td>Linux x64</td>' -A1 | head -2 | cut -d '/' -f5 | tail -1 > ${agent_version}
+# RUN curl -Ls https://github.com/microsoft/azure-pipelines-agent/releases | grep '<td>Linux x64</td>' -A1 | head -2 | cut -d '/' -f5 | tail -1 > ${agent_version}
+RUN curl -Ls https://github.com/microsoft/azure-pipelines-agent/releases/latest | grep '<td>Linux x64</td>' -A1 | head -2 | cut -d '/' -f5 | tail -1 > ${agent_version}
 
 #Install required prereqs
-RUN yum install -y git 
+RUN yum install -y git
 RUN yum install -y wget
 RUN yum install -y compat-openssl10
 
 #Install ADO build agent + dependencies
 RUN mkdir -p /opt/ado_agent/build_scripts
 WORKDIR /opt/ado_agent/
-RUN wget https://vstsagentpackage.azureedge.net/agent/$(cat ${agent_version})/vsts-agent-linux-x64-$(cat ${agent_version}).tar.gz --no-check-certificate 
+RUN wget https://vstsagentpackage.azureedge.net/agent/$(cat ${agent_version})/vsts-agent-linux-x64-$(cat ${agent_version}).tar.gz --no-check-certificate
 COPY ./files/connect.sh ./connect.sh
 RUN chmod 755 ./connect.sh
 RUN tar xvzf vsts-agent-linux-x64-$(cat ${agent_version}).tar.gz

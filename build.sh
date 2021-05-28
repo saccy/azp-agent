@@ -1,5 +1,5 @@
 #!/bin/bash
 
-docker build . -t hudev/azp-agent:centos8
+docker build . -t saccy/azp-agent:latest
 
-docker push hudev/azp-agent:centos8  
+docker push saccy/azp-agent:latest
