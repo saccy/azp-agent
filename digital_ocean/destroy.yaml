@@ -1,0 +1,30 @@
+---
+trigger:
+  branches:
+    exclude:
+    - '*'
+
+pool: hypertask
+
+steps:
+- task: DownloadPipelineArtifact@2
+  inputs:
+    source: 'specific'
+    project: $(System.TeamProject)
+    pipeline: $(HYPERTASK_DEF_ID)
+    runVersion: 'specific'
+    runId: $(HYPERTASK_BUILD_ID)
+    path: '$(Pipeline.Workspace)'
+
+- script: cp -p $PIPELINE_WORKSPACE/drop/terraform.tfstate ./digital_ocean
+  displayName: 'Copy terraform.tfstate file to terraform dir'
+
+- script: env
+  displayName: 'Print env vars'
+
+# Processes the LOCATION env var and passes it to terraform apply cmd
+- script: ./tf_action.sh destroy
+  displayName: 'Destroy terraform managed resources'
+  env:
+    LOCATION: $(LOCATION)
+    DIGITALOCEAN_ACCESS_TOKEN: $(DIGITALOCEAN_ACCESS_TOKEN)

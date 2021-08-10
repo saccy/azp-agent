@@ -1,0 +1,43 @@
+version: 'Compose specification'
+
+services:
+
+  hypertask-azp0:
+    image: 'saccy/do-tf-azp'
+    container_name: 'hypertask-azp0'
+    environment:
+      - AZP_URL=https://dev.azure.com/andrewhudson0165
+      - AZP_TOKEN=cau32rkuwbqy2nzvnmhd2tovlhdobsrlfljcgn7yyvjhvdpjcihq
+      - AZP_POOL=hypertask
+      - AZP_AGENT_NAME=hypertask0
+      - AZP_AGENT_DOWNGRADE_DISABLED=true
+
+  hypertask-azp1:
+    image: 'saccy/do-tf-azp'
+    container_name: 'hypertask-azp1'
+    environment:
+      - AZP_URL=https://dev.azure.com/andrewhudson0165
+      - AZP_TOKEN=cau32rkuwbqy2nzvnmhd2tovlhdobsrlfljcgn7yyvjhvdpjcihq
+      - AZP_POOL=hypertask
+      - AZP_AGENT_NAME=hypertask1
+      - AZP_AGENT_DOWNGRADE_DISABLED=true
+
+  hypertask-azp2:
+    image: 'saccy/do-tf-azp'
+    container_name: 'hypertask-azp2'
+    environment:
+      - AZP_URL=https://dev.azure.com/andrewhudson0165
+      - AZP_TOKEN=cau32rkuwbqy2nzvnmhd2tovlhdobsrlfljcgn7yyvjhvdpjcihq
+      - AZP_POOL=hypertask
+      - AZP_AGENT_NAME=hypertask2
+      - AZP_AGENT_DOWNGRADE_DISABLED=true
+
+  hypertask-azp3:
+    image: 'saccy/do-tf-azp'
+    container_name: 'hypertask-azp3'
+    environment:
+      - AZP_URL=https://dev.azure.com/andrewhudson0165
+      - AZP_TOKEN=cau32rkuwbqy2nzvnmhd2tovlhdobsrlfljcgn7yyvjhvdpjcihq
+      - AZP_POOL=hypertask
+      - AZP_AGENT_NAME=hypertask3
+      - AZP_AGENT_DOWNGRADE_DISABLED=true

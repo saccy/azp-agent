@@ -1,0 +1,43 @@
+---
+trigger:
+  branches:
+    exclude:
+    - '*'
+
+pool: hypertask
+
+steps:
+
+- bash: ./tf_action.sh apply | tee terraform.out
+  displayName: 'Apply terraform module'
+  env:
+    DIGITALOCEAN_ACCESS_TOKEN: $(DIGITALOCEAN_ACCESS_TOKEN)
+
+- bash: echo "##vso[task.setvariable variable=ovpn_public_ip]$(cat terraform.out | grep ^ovpn_public_ip | cut -d' ' -f3 | tr -d '"')"
+  displayName: Save OpenVPN server public IP to a variable
+
+- bash: echo "##vso[task.setvariable variable=ovpn_server_id]$(cat terraform.out | grep ^ovpn_server_id | cut -d' ' -f3 | tr -d '"')"
+  displayName: Save OpenVPN server ID to a variable
+
+- bash: ./wait4server.sh
+  displayName: Wait for server to become active
+  env:
+    DIGITALOCEAN_ACCESS_TOKEN: $(DIGITALOCEAN_ACCESS_TOKEN)
+
+- bash: ./wait4ssh.sh
+  displayName: Wait for port 22 to start listening on VPN server
+
+- bash: ./wait4file.sh
+  displayName: Wait for client.ovpn file to be generated on vpn server
+  
+- bash: ./download_client_file.sh
+  displayName: Download ovpn client file to artifact staging directory
+
+- bash: cp -rp digital_ocean/terraform.tfstate $BUILD_ARTIFACTSTAGINGDIRECTORY
+  displayName: Copy terraform stage file to artifact staging directory
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'drop' 
+    publishLocation: 'Container'
